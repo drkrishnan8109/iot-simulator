@@ -1,7 +1,7 @@
-package com.example.iot
+package com.sensorsimulate.iot
 
 import akka.actor.{Actor, Props}
-import com.example.iot.ProducerActor.Produce
+import com.sensorsimulate.iot.ProducerActor.Produce
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 object ProducerActor {
@@ -17,7 +17,5 @@ class ProducerActor extends Actor with ProducerTrait {
       val record = new ProducerRecord[String, String](topic, data)
 
       producer.send(record)
-
-    // logger.info(s"produced message $data to $topic")
   }
 }

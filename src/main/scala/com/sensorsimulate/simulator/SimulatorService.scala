@@ -1,17 +1,18 @@
-package com.example.simulator
+package com.sensorsimulate.simulator
 
 import akka.actor.ActorSystem
-import com.example.config.KafkaConf
-import com.example.iot.ProducerActor.Produce
+import com.sensorsimulate.config.KafkaConf
+import com.sensorsimulate.iot.ProducerActor.Produce
 
 import scala.concurrent.duration._
 import akka.actor.{ActorRef, OneForOneStrategy}
 import akka.routing.{DefaultResizer, SmallestMailboxPool}
-import com.example.iot.ProducerActor
-import com.example.iot.DataManager
-import com.example.utils.JacksonUtil
+import com.sensorsimulate.iot.ProducerActor
+import com.sensorsimulate.iot.DataManager
 
-class SimulatorService(system: ActorSystem) extends KafkaConf with JacksonUtil {
+class SimulatorService(system: ActorSystem) extends KafkaConf with DataManager {
+
+  import com.sensorsimulate.util.GsonParser
 
   implicit val executionContext = system.dispatcher
 
@@ -32,11 +33,9 @@ class SimulatorService(system: ActorSystem) extends KafkaConf with JacksonUtil {
       "producerPool"
     )
 
-  val data = DataManager.getData
-
   // Scheduler: Every one second, a random data(corresponding to any of the 3 deviceIds) is send to the producer
-  system.scheduler.scheduleOnce(60 milliseconds) {
-    producerPool ! Produce(kafkaTopic, mapper.writeValueAsString(data))
+  system.scheduler.schedule(0 seconds, 60 milliseconds) {
+    producerPool ! Produce(kafkaTopic, GsonParser.parser.toJson(getData))
   }
 
 }

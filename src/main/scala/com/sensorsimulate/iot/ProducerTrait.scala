@@ -1,8 +1,7 @@
-package com.example.iot
+package com.sensorsimulate.iot
 
 import java.util.Properties
-
-import com.example.config.KafkaConf
+import com.sensorsimulate.config.KafkaConf
 
 trait ProducerTrait extends KafkaConf {
 

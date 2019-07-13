@@ -1,4 +1,4 @@
-package com.example.config
+package com.sensorsimulate.config
 
 trait KafkaConf {
 

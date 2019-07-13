@@ -1,7 +1,6 @@
-package com.example.simulator
+package com.sensorsimulate.simulator
 
 import akka.actor.ActorSystem
-import com.example.iot.ProducerActor
 
 object Main extends App {
 

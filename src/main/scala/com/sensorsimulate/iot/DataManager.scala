@@ -1,14 +1,14 @@
-package com.example.iot
+package com.sensorsimulate.iot
 
-object DataManager {
+case class Location(latitude: Double, longitude: Double)
+case class Data(
+    deviceId: String,
+    temperature: Int,
+    location: Location,
+    time: Long
+)
 
-  case class Location(latitude: Double, longitude: Double)
-  case class Data(
-      deviceId: String,
-      temperature: Int,
-      location: Location,
-      time: Long
-  )
+trait DataManager {
 
   def pickDeviceID: String = {
     val rand = scala.util.Random.nextInt(3)
